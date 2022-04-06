@@ -2317,6 +2317,7 @@ var wordleList = [
 ];
 
 var extendedList = [
+    'utile',
     'stout',
     'relay',
     'leone',

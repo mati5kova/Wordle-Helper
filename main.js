@@ -1,14 +1,8 @@
 import { wordleList, extendedList } from './modules/dictionary.js';
-//console.log(wordleList, extendedList);
 
 var wordlePossibleWords = wordleList.slice();
 var extendedPossibleWords = extendedList.slice();
 var dictionaryOfResultWords = wordlePossibleWords;
-
-const renewLists = () => {
-    wordlePossibleWords = wordleList.slice();
-    extendedPossibleWords = extendedList.slice();
-};
 
 //popup
 const togglePopup = () => {
@@ -17,7 +11,7 @@ const togglePopup = () => {
 window.onload = togglePopup();
 document.getElementById('close-btn').addEventListener('click', togglePopup);
 
-/* ----dictionary---- */
+//dictionary
 document.getElementById('dictionaryBtn').addEventListener('click', () => {
     let btn = document.getElementById('dictionaryBtn');
 
@@ -30,12 +24,18 @@ document.getElementById('dictionaryBtn').addEventListener('click', () => {
     }
 });
 
-/* ----main---- */
+//obnovitev list besed
+const renewLists = () => {
+    wordlePossibleWords = wordleList.slice();
+    extendedPossibleWords = extendedList.slice();
+};
+
+//submit btn
 document.getElementById('submitBtn').addEventListener('click', () => {
     renewLists(); //da so liste polne, ne pa že filtrirane od prej
-    let isEmpty = true;
-    const resultsHtml = document.getElementById('results');
+    let isEmpty = true; //za preverjanje user inputa
 
+    const resultsHtml = document.getElementById('results'); //za result worde
     const formData = Array.from(document.querySelectorAll('#input-form input')).reduce((acc, input) => ({ ...acc, [input.id]: input.value }), {}); //object
 
     //vrne vse besede ki se začnejo na...
@@ -95,7 +95,7 @@ document.getElementById('submitBtn').addEventListener('click', () => {
         isEmpty = false;
     }
 
-    //
+    //dodajanje besed v result field
     if (isEmpty === true) {
         resultsHtml.innerText = 'Provide some information about the word first';
     } else if (isEmpty === false && dictionaryOfResultWords.length === 0) {
@@ -105,7 +105,7 @@ document.getElementById('submitBtn').addEventListener('click', () => {
         resultsHtml.innerText = resultWords;
     }
 
-    //reset slovarja z vsemi možnimi besedami
+    //reset liste besed
     if (document.getElementById('dictionaryBtn').innerText === 'WORDLE DICTIONARY') {
         dictionaryOfResultWords = wordleList.slice();
     } else {
@@ -113,6 +113,7 @@ document.getElementById('submitBtn').addEventListener('click', () => {
     }
 });
 
+//čiščenje forma in result fielda
 document.getElementById('resetBtn').addEventListener('click', () => {
     document.getElementById('input-form').reset();
     document.getElementById('results').innerText = '';
