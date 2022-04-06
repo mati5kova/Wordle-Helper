@@ -1,0 +1,204 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+}
+
+h1 {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 32px;
+    text-align: center;
+    color: rgb(0, 110, 255);
+}
+
+/* za responsive design */
+.wrapper {
+    text-align: center;
+    width: 100%;
+}
+
+.form-container {
+    display: inline-block;
+    width: 132px;
+    text-align: left;
+}
+
+.form-container input {
+    border: 3px solid #929191;
+    border-radius: 7px;
+    width: 93%;
+    clear: both;
+}
+
+.results {
+    width: 132px;
+    text-align: center;
+}
+
+.dictionary-btn {
+    height: 28px;
+    width: 132px;
+    margin-bottom: 4.5px;
+    background-color: rgb(197, 197, 197);
+    border-style: doble;
+    border-color: rgb(219, 219, 219);
+    font-size: 11px;
+    color: black;
+}
+
+#dictionaryBtn:hover {
+    background-color: rgb(187, 184, 184);
+}
+
+.buttons {
+    background-color: rgb(197, 197, 197);
+    border-style: doble;
+    border-color: rgb(219, 219, 219);
+    height: 28px;
+    width: 64px;
+}
+
+.buttons:active {
+    border-style: hidden;
+}
+
+#resetBtn:hover {
+    color: rgb(223, 32, 32);
+    background-color: rgb(187, 184, 184);
+}
+
+#submitBtn:hover {
+    color: rgb(13, 156, 13);
+    background-color: rgb(187, 184, 184);
+}
+
+/*        --------pop up--------        */
+.popup .overlay {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    display: none;
+}
+
+.popup .content {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: #fff;
+    border-radius: 7px;
+    width: 430px;
+    height: 460px; /*470*/
+    z-index: 2;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* križec desno zgori*/
+.popup .close-btn {
+    cursor: pointer;
+    position: absolute;
+    right: 15px;
+    top: 14px;
+    width: 30px;
+    height: 30px;
+    background: rgb(255, 255, 255);
+    opacity: 0.9;
+    color: rgb(0, 0, 0);
+    font-size: 35px;
+    font-weight: 600;
+    line-height: 31px;
+    text-align: center;
+    border-radius: 50%;
+}
+
+/* barva, opacity, funkcijonalnost ozadja ko je popup omogočen*/
+.popup.active .overlay {
+    background-color: rgb(0, 0, 0);
+    opacity: 0.48;
+    display: block;
+}
+
+.popup.active .content {
+    transition: all 220ms ease-in-out;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.instructions {
+    text-align: left;
+}
+
+.instructions-p-margin-top-bottom {
+    margin: 6px 0px 6px;
+}
+
+.instructions-p-example {
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.instructions-p-bold {
+    font-weight: bold;
+}
+
+.instruction-images {
+    text-align: center;
+}
+
+/* če je screen width manjši od 460px naredi...*/
+@media (max-width: 450px) {
+    h1 {
+        color: orange;
+    }
+    .popup .content {
+        /*og širina x višina popupa: 430x640*/
+        top: 50%;
+        width: 360px;
+        height: 440px;
+    }
+    .example-instructions-img {
+        width: auto;
+    }
+
+    .popup .close-btn {
+        top: 16px;
+        right: 17px;
+    }
+}
+
+@media (orientation: landscape) {
+    h1 {
+        color: green;
+    }
+    .popup .content {
+        top: 50%;
+    }
+}
+
+/* manjše od širine 360px npr.-> iPhone 5*/
+@media (max-width: 370px) {
+    h1 {
+        color: black;
+    }
+
+    .popup .content {
+        top: 50%;
+        width: 310px;
+        height: 420px;
+    }
+    .instructions-example-img {
+        width: 270px;
+        height: 48px;
+    }
+    .instructions-ltr-img {
+        width: 127px;
+        height: auto;
+    }
+}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Wordle Helper</title>
+        <meta charset="UTF-8" />
+        <meta name="description" content="Wordle Helper is a free website to help you solve your daily wordle" />
+        <meta name="author" content="Matevž Kovačič" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <script type="module" src="./main.js" defer></script>
+        <link href="./styles.css" rel="stylesheet" defer />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet" />
+        <noscript>In order for wordle helper to function normally please enable javascript</noscript>
+    </head>
+    <body>
+        <div class="wrapper">
+            <h1>WORDLE HELPER</h1>
+            <div class="popup" id="popup-1">
+                <div class="overlay"></div>
+                <div class="content">
+                    <div class="close-btn" id="close-btn">&times;</div>
+                    <h1>WELCOME</h1>
+                    <div class="instructions">
+                        <p class="instructions-p-bold">How to use wordle helper:</p>
+                        <p class="instructions-p-margin-top-bottom">
+                            Just play your wordle like you usually would and if you get stuck and need some help just fill in the input fields with the
+                            information you have already gathered, then click submit
+                        </p>
+                        <p class="instructions-p-example">For example:</p>
+                        <div class="instruction-images">
+                            <p>
+                                <img class="instructions-example-img" src="./images/nasty.png" alt="Image" width="auto" height="62" />
+                                <br /><br />
+                                <img class="instructions-ltr-img" src="./images/second.png" alt="Image" width="140" height="40" /> &nbsp&nbsp
+                                <img class="instructions-ltr-img" src="./images/fourth.png" alt="Image" width="140" height="40" />
+                                <br />
+                                <img class="instructions-ltr-img" src="./images/including.png" alt="Image" width="140" height="40" />&nbsp&nbsp
+                                <img class="instructions-ltr-img" src="./images/notinclude.png" alt="Image" width="140" height="40" />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- input form -->
+            <div class="form-container">
+                <form id="input-form" autocomplete="off" autocapitalize="off">
+                    <label for="firstLetter">First letter:</label>
+                    <input id="firstLetter" type="text" maxlength="1" /><br />
+
+                    <label for="secondLetter">Second letter:</label>
+                    <input id="secondLetter" type="text" maxlength="1" /><br />
+
+                    <label for="thirdLetter">Third letter:</label>
+                    <input id="thirdLetter" type="text" maxlength="1" /><br />
+
+                    <label for="fourthLetter">Fourth letter:</label>
+                    <input id="fourthLetter" type="text" maxlength="1" /><br />
+
+                    <label for="fifthLetter">Fift letter:</label>
+                    <input id="fifthLetter" type="text" maxlength="1" /><br /><br />
+
+                    <label for="includesLetter">Includes letter(s):</label>
+                    <input type="text" id="includesLetter" maxlength="5" /><br />
+
+                    <label for="doesntInclude">Does not include:</label>
+                    <input type="text" id="doesntInclude" maxlength="26" /><br /><br />
+                </form>
+                <!-- toggle dictionary -->
+                <button class="dictionary-btn" id="dictionaryBtn">WORDLE DICTIONARY</button>
+
+                <!-- submit & reset -->
+                <button class="buttons" id="resetBtn" type="button">Reset</button>
+                <button class="buttons" id="submitBtn" type="button">Submit</button><br /><br />
+
+                <div class="results">
+                    <p id="results">
+                        <!--eager, eager, eager, eager, eager, eager, eager, eager, eager, eager, eager, eager, eager, eager, eager, eager, eager, eager, eager,
+                        eager, eager, eager, eager, eager-->
+                    </p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
