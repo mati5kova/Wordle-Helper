@@ -101,6 +101,11 @@ document.getElementById('submitBtn').addEventListener('click', () => {
     } else {
         const resultWords = dictionaryOfResultWords.join(', ');
         resultsHtml.innerText = resultWords;
+
+        //če je height večji od width (mobile) -> smooth scroll do rezultatov
+        if (window.innerHeight > window.innerWidth) {
+            window.location = 'index.html#results';
+        }
     }
 
     //reset liste besed
