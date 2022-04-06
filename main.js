@@ -1,8 +1,6 @@
-import { wordleList, extendedList } from './modules/dictionary.js';
-
-var wordlePossibleWords = wordleList.slice();
-var extendedPossibleWords = extendedList.slice();
-var dictionaryOfResultWords = wordlePossibleWords;
+let wordlePossibleWords = wordleList.slice();
+let extendedPossibleWords = extendedList.slice();
+let dictionaryOfResultWords = wordlePossibleWords;
 
 //popup
 const togglePopup = () => {

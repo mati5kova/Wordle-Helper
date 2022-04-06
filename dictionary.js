@@ -8078,5 +8078,3 @@ var extendedList = [
     'biffy',
     'pupal',
 ];
-
-export { wordleList, extendedList };
