@@ -25,7 +25,7 @@ h1 {
 
 .form-container {
     display: inline-block;
-    width: 132px;
+    width: 160px;
     text-align: left;
 }
 
@@ -37,18 +37,18 @@ h1 {
 }
 
 .results {
-    width: 132px;
+    width: 160px;
     text-align: center;
 }
 
 .dictionary-btn {
     height: 28px;
-    width: 132px;
-    margin-bottom: 4.5px;
+    width: 154.5px;
+    margin-bottom: 14px;
     background-color: rgb(197, 197, 197);
     border-style: doble;
     border-color: rgb(219, 219, 219);
-    font-size: 11px;
+    font-size: 12.9px;
     color: black;
 }
 
@@ -56,26 +56,24 @@ h1 {
     background-color: rgb(187, 184, 184);
 }
 
+#dictionaryBtn:active {
+    border-style: hidden;
+}
+
 .buttons {
     background-color: rgb(197, 197, 197);
     border-style: doble;
     border-color: rgb(219, 219, 219);
     height: 28px;
-    width: 64px;
+    width: 68.5px;
+}
+
+#resetBtn {
+    margin-right: 14px;
 }
 
 .buttons:active {
     border-style: hidden;
-}
-
-#resetBtn:hover {
-    color: rgb(223, 32, 32);
-    background-color: rgb(187, 184, 184);
-}
-
-#submitBtn:hover {
-    color: rgb(13, 156, 13);
-    background-color: rgb(187, 184, 184);
 }
 
 /*        --------pop up--------        */
@@ -185,6 +183,15 @@ h1 {
     }*/
     .popup .content {
         top: 50%;
+    }
+    #resetBtn:hover {
+        color: rgb(223, 32, 32);
+        background-color: rgb(187, 184, 184);
+    }
+
+    #submitBtn:hover {
+        color: rgb(13, 156, 13);
+        background-color: rgb(187, 184, 184);
     }
 }
 
