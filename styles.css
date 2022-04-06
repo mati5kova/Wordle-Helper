@@ -154,9 +154,10 @@ h1 {
 
 /* če je screen width manjši od 460px naredi...*/
 @media (max-width: 450px) {
+    /*
     h1 {
         color: orange;
-    }
+    }*/
     .popup .content {
         /*og širina x višina popupa: 430x640*/
         top: 50%;
@@ -174,9 +175,10 @@ h1 {
 }
 
 @media (orientation: landscape) {
+    /*
     h1 {
         color: green;
-    }
+    }*/
     .popup .content {
         top: 50%;
     }
@@ -184,9 +186,10 @@ h1 {
 
 /* manjše od širine 360px npr.-> iPhone 5*/
 @media (max-width: 370px) {
+    /*
     h1 {
         color: black;
-    }
+    }*/
 
     .popup .content {
         top: 50%;
