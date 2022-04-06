@@ -1,9 +1,8 @@
 import { wordleList, extendedList } from './modules/dictionary.js';
-console.log(wordleList, extendedList);
+//console.log(wordleList, extendedList);
 
 var wordlePossibleWords = wordleList.slice();
 var extendedPossibleWords = extendedList.slice();
-
 var dictionaryOfResultWords = wordlePossibleWords;
 
 const renewLists = () => {
@@ -28,23 +27,21 @@ document.getElementById('dictionaryBtn').addEventListener('click', () => {
     } else if (btn.innerText === 'EXTENDED DICTIONARY') {
         btn.innerText = 'WORDLE DICTIONARY';
         dictionaryOfResultWords = wordlePossibleWords;
-    } // prostor za še slovenski slovar ??
+    }
 });
 
 /* ----main---- */
 document.getElementById('submitBtn').addEventListener('click', () => {
     renewLists(); //da so liste polne, ne pa že filtrirane od prej
     let isEmpty = true;
-    const resultsHtml = document.getElementById('results').innerText;
+    const resultsHtml = document.getElementById('results');
 
     const formData = Array.from(document.querySelectorAll('#input-form input')).reduce((acc, input) => ({ ...acc, [input.id]: input.value }), {}); //object
-    //formData.firstLetter      secondLetter    thirdLetter     fourthLetter    fifthLetter     includesLetter      doesntInclude
 
     //vrne vse besede ki se začnejo na...
     if (formData.firstLetter !== '') {
         dictionaryOfResultWords = dictionaryOfResultWords.filter((word) => {
             return word.charAt(0) === formData.firstLetter;
-            //return word.indexOf(formData.firstLetter) === 0; //ne deluje-> exepction: dve isti črki
         });
         isEmpty = false;
     }
@@ -98,11 +95,15 @@ document.getElementById('submitBtn').addEventListener('click', () => {
         isEmpty = false;
     }
 
-    //console.log(dictionaryOfResultWords);
-
-    //isEmpty === true ? console.log('empty') : console.log('not empty');
-    const text = dictionaryOfResultWords.join(', ');
-    isEmpty === true ? (resultsHtml = 'Provide some information about the word first') : (resultsHtml = text); //.innerText
+    //
+    if (isEmpty === true) {
+        resultsHtml.innerText = 'Provide some information about the word first';
+    } else if (isEmpty === false && dictionaryOfResultWords.length === 0) {
+        resultsHtml.innerText = 'No words could be found';
+    } else {
+        const resultWords = dictionaryOfResultWords.join(', ');
+        resultsHtml.innerText = resultWords;
+    }
 
     //reset slovarja z vsemi možnimi besedami
     if (document.getElementById('dictionaryBtn').innerText === 'WORDLE DICTIONARY') {
@@ -110,4 +111,9 @@ document.getElementById('submitBtn').addEventListener('click', () => {
     } else {
         dictionaryOfResultWords = extendedList.slice();
     }
+});
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+    document.getElementById('input-form').reset();
+    document.getElementById('results').innerText = '';
 });
