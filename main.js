@@ -1,6 +1,6 @@
-let wordlePossibleWords = wordleList.slice();
-let extendedPossibleWords = extendedList.slice();
-let dictionaryOfResultWords = wordlePossibleWords;
+var wordlePossibleWords = wordleList.slice();
+var extendedPossibleWords = extendedList.slice();
+var dictionaryOfResultWords = wordlePossibleWords;
 
 //popup
 const togglePopup = () => {
