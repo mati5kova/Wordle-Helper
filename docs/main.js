@@ -104,7 +104,7 @@ document.getElementById('submitBtn').addEventListener('click', () => {
 
         //če je height večji od width (mobile) -> smooth scroll do rezultatov
         if (window.innerHeight > window.innerWidth) {
-            window.location = 'index.html#results';
+            window.location = '#results';
         }
     }
 
