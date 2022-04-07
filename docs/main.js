@@ -33,6 +33,7 @@ const renewLists = () => {
 document.getElementById('submitBtn').addEventListener('click', () => {
     renewLists(); //da so liste polne, ne pa že filtrirane od prej
     let isEmpty = true; //za preverjanje user inputa
+    let knownLetters = [];
 
     const resultsHtml = document.getElementById('results'); //za result worde
     const formData = Array.from(document.querySelectorAll('#input-form input')).reduce((acc, input) => ({ ...acc, [input.id]: input.value }), {}); //object
@@ -43,6 +44,7 @@ document.getElementById('submitBtn').addEventListener('click', () => {
             return word.charAt(0) === formData.firstLetter;
         });
         isEmpty = false;
+        knownLetters.push(formData.firstLetter);
     }
     //vrne vse besede ki imajo drugo črko...
     if (formData.secondLetter !== '') {
@@ -50,6 +52,7 @@ document.getElementById('submitBtn').addEventListener('click', () => {
             return word.charAt(1) === formData.secondLetter;
         });
         isEmpty = false;
+        knownLetters.push(formData.secondLetter);
     }
     //vrne vse besede ki imajo tretjo črko...
     if (formData.thirdLetter !== '') {
@@ -57,6 +60,7 @@ document.getElementById('submitBtn').addEventListener('click', () => {
             return word.charAt(2) === formData.thirdLetter;
         });
         isEmpty = false;
+        knownLetters.push(formData.thirdLetter);
     }
     //vrne vse besede ki imajo četrto črko...
     if (formData.fourthLetter !== '') {
@@ -64,6 +68,7 @@ document.getElementById('submitBtn').addEventListener('click', () => {
             return word.charAt(3) === formData.fourthLetter;
         });
         isEmpty = false;
+        knownLetters.push(formData.fourthLetter);
     }
     //vrne vse besede ki imajo peto črko...
     if (formData.fifthLetter !== '') {
@@ -71,6 +76,7 @@ document.getElementById('submitBtn').addEventListener('click', () => {
             return word.charAt(4) === formData.fifthLetter;
         });
         isEmpty = false;
+        knownLetters.push(formData.fifthLetter);
     }
     //vrne vse besede ki vsebujejo 'including letters'
     if (formData.includesLetter !== '') {
@@ -80,16 +86,21 @@ document.getElementById('submitBtn').addEventListener('click', () => {
             dictionaryOfResultWords = dictionaryOfResultWords.filter((word) => {
                 return word.includes(char);
             });
+
+            knownLetters.push(char);
         });
         isEmpty = false;
     }
+
     //vrne vse besede ki ne vsebujejo določenih črk
     if (formData.doesntInclude !== '') {
         let letters = Array.from(formData.doesntInclude);
         letters.forEach((char) => {
-            dictionaryOfResultWords = dictionaryOfResultWords.filter((word) => {
-                return !word.includes(char);
-            });
+            if (!knownLetters.includes(char)) {
+                dictionaryOfResultWords = dictionaryOfResultWords.filter((word) => {
+                    return !word.includes(char);
+                });
+            }
         });
         isEmpty = false;
     }
