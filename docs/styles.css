@@ -194,14 +194,14 @@ h1 {
         font-size: 27px;
         position: absolute;
         top: 17px;
-        left: 16px;
+        right: 18px;
     }
 
     #info-icon:active {
         font-size: 27px;
         position: absolute;
         top: 17px;
-        left: 16px;
+        right: 18px;
     }
 }
 
@@ -250,14 +250,14 @@ h1 {
     #info-icon {
         font-size: 22px;
         position: absolute;
-        top: 18px;
-        left: 3px;
+        top: 19px;
+        right: 3px;
     }
 
     #info-icon:active {
         font-size: 22px;
         position: absolute;
-        top: 18px;
-        left: 3px;
+        top: 19px;
+        right: 3px;
     }
 }
