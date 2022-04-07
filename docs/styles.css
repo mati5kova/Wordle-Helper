@@ -53,6 +53,7 @@ h1 {
 .results {
     width: 160px;
     text-align: center;
+    margin-bottom: 10px;
 }
 
 .dictionary-btn {
