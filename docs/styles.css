@@ -17,7 +17,21 @@ h1 {
     color: rgb(0, 110, 255);
 }
 
-/* za responsive design */
+#info-icon {
+    color: rgb(0, 110, 255);
+    font-size: 32px;
+    position: absolute;
+    top: 14px;
+    left: 16px;
+}
+
+#info-icon:active {
+    font-size: 28px;
+    position: absolute;
+    top: 15px;
+    left: 19px;
+}
+
 .wrapper {
     text-align: center;
     width: 100%;
@@ -174,6 +188,20 @@ h1 {
         top: 16px;
         right: 17px;
     }
+
+    #info-icon {
+        font-size: 27px;
+        position: absolute;
+        top: 17px;
+        left: 16px;
+    }
+
+    #info-icon:active {
+        font-size: 27px;
+        position: absolute;
+        top: 17px;
+        left: 16px;
+    }
 }
 
 @media (orientation: landscape) {
@@ -207,12 +235,28 @@ h1 {
         width: 310px;
         height: 420px;
     }
+
     .instructions-example-img {
         width: 270px;
         height: 48px;
     }
+
     .instructions-ltr-img {
         width: 127px;
         height: auto;
+    }
+
+    #info-icon {
+        font-size: 22px;
+        position: absolute;
+        top: 18px;
+        left: 3px;
+    }
+
+    #info-icon:active {
+        font-size: 22px;
+        position: absolute;
+        top: 18px;
+        left: 3px;
     }
 }

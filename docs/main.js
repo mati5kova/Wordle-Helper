@@ -7,7 +7,8 @@ const togglePopup = () => {
     document.getElementById('popup-1').classList.toggle('active');
 };
 window.onload = togglePopup();
-document.getElementById('close-btn').addEventListener('click', togglePopup);
+document.getElementById('close-btn').addEventListener('click', togglePopup); //za križec v popupu
+document.getElementById('info-icon').addEventListener('click', togglePopup); //za info button
 
 //dictionary
 document.getElementById('dictionaryBtn').addEventListener('click', () => {
