@@ -22,14 +22,14 @@ h1 {
     font-size: 32px;
     position: absolute;
     top: 14px;
-    left: 16px;
+    right: 16px;
 }
 
 #info-icon:active {
     font-size: 28px;
     position: absolute;
     top: 15px;
-    left: 19px;
+    right: 19px;
 }
 
 .wrapper {
