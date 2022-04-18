@@ -1,16 +1,125 @@
 var wordlePossibleWords = wordleList.slice();
-var extendedPossibleWords = extendedList.slice();
+var extendedPossibleWords = extendedList.slice().sort();
 var dictionaryOfResultWords = wordlePossibleWords;
+var advancedMode = false;
 
-//popup
+//color theme
+const toggleColorTheme = () => {
+    document.body.classList.toggle('dark-body');
+
+    document.querySelectorAll('.inp').forEach((field) => {
+        field.classList.toggle('dark-input-field');
+    });
+
+    document.querySelector('.fa-gear').classList.toggle('dark-settings-icon');
+
+    document.querySelector('.content').classList.toggle('dark-popup');
+    document.querySelector('.settings-content').classList.toggle('dark-popup');
+    document.querySelectorAll('.p-bold').forEach((p) => {
+        p.classList.toggle('dark-p-bold');
+    });
+    document.querySelectorAll('.close-btn , .settings-close-btn').forEach((btn) => {
+        btn.classList.toggle('dark-close-btn');
+    });
+
+    document.querySelector('.dark-mode-label').classList.toggle('dark-dark-mode-label');
+    document.querySelectorAll('.all-btn').forEach((btn) => {
+        btn.classList.toggle('dark-mode-buttons-color');
+    });
+
+    //defaultno je naštiman da so skrite slike od dark moda
+    //v preverjanju če je local storage theme === dark odstrani ali pa pusti class hidden
+    //v vsakem primeru imajo ene slike class hidden in to samo toggla katere
+    document.querySelector('.images-light-mode').classList.toggle('hidden');
+    document.querySelector('.images-dark-mode').classList.toggle('hidden');
+};
+
+if (localStorage.getItem('theme') === null) {
+    localStorage.setItem('theme', 'light');
+    document.getElementById('darkModeCheckbox').checked = false;
+}
+
+if (localStorage.getItem('theme') === 'dark') {
+    toggleColorTheme();
+    //nastavi vrednost checkboxa
+    document.getElementById('darkModeCheckbox').checked = true;
+
+    const darkImages = document.querySelector('.images-dark-mode');
+    if (darkImages.classList.contains('hidden')) {
+        darkImages.classList.remove('hidden');
+        document.querySelector('.images-light-mode').classList.add('hidden');
+    }
+}
+
+document.getElementById('darkModeCheckbox').addEventListener('change', () => {
+    if (document.getElementById('darkModeCheckbox').checked) {
+        localStorage.setItem('theme', 'dark');
+    } else {
+        localStorage.setItem('theme', 'light');
+    }
+
+    toggleColorTheme();
+});
+
+//ADVANCED SEARCH MODE
+if (localStorage.getItem('mode') === null) {
+    localStorage.setItem('mode', 'normal');
+    document.getElementById('advancedModeCheckbox').checked = false;
+
+    document.querySelectorAll('.inp-main').forEach((input) => {
+        input.maxLength = 1;
+    });
+}
+if (localStorage.getItem('mode') === 'advanced') {
+    document.getElementById('advancedModeCheckbox').checked = true;
+    advancedMode = true;
+
+    document.querySelectorAll('.inp-main').forEach((input) => {
+        input.maxLength = 6;
+    });
+}
+
+document.getElementById('advancedModeCheckbox').addEventListener('change', () => {
+    if (document.getElementById('advancedModeCheckbox').checked) {
+        localStorage.setItem('mode', 'advanced');
+        advancedMode = true;
+
+        document.querySelectorAll('.inp-main').forEach((input) => {
+            input.maxLength = 6;
+        });
+
+        document.getElementById('input-form').reset();
+        document.getElementById('results').innerText = '';
+    } else {
+        localStorage.setItem('mode', 'normal');
+        advancedMode = false;
+
+        document.querySelectorAll('.inp-main').forEach((input) => {
+            input.maxLength = 1;
+        });
+
+        document.getElementById('input-form').reset();
+        document.getElementById('results').innerText = '';
+    }
+});
+
+//POPUP
 const togglePopup = () => {
     document.getElementById('popup-1').classList.toggle('active');
 };
+
+const toggleSettings = () => {
+    document.getElementById('settings-1').classList.toggle('active');
+};
+
 window.onload = togglePopup();
 document.getElementById('close-btn').addEventListener('click', togglePopup); //za križec v popupu
+document.querySelector('.popup .overlay').addEventListener('click', togglePopup); //ni treba kliknt križca *kot v wordlu*
 document.getElementById('info-icon').addEventListener('click', togglePopup); //za info button
+document.getElementById('settings-icon').addEventListener('click', toggleSettings);
+document.getElementById('settings-close-btn').addEventListener('click', toggleSettings);
 
-//dictionary
+//DICTIONARY
 document.getElementById('dictionaryBtn').addEventListener('click', () => {
     let btn = document.getElementById('dictionaryBtn');
 
@@ -26,65 +135,206 @@ document.getElementById('dictionaryBtn').addEventListener('click', () => {
 //obnovitev list besed
 const renewLists = () => {
     wordlePossibleWords = wordleList.slice();
-    extendedPossibleWords = extendedList.slice();
+    extendedPossibleWords = extendedList.slice().sort();
 };
 
-//submit btn
+//SUBMIT BUTTON
 document.getElementById('submitBtn').addEventListener('click', () => {
     renewLists(); //da so liste polne, ne pa že filtrirane od prej
     let isEmpty = true; //za preverjanje user inputa
     let knownLetters = [];
+    let includingLettersAfterSlash = [];
 
     const resultsHtml = document.getElementById('results'); //za result worde
     const formData = Array.from(document.querySelectorAll('#input-form input')).reduce((acc, input) => ({ ...acc, [input.id]: input.value }), {}); //object
 
     //vrne vse besede ki se začnejo na...
     if (formData.firstLetter !== '') {
-        dictionaryOfResultWords = dictionaryOfResultWords.filter((word) => {
-            return word.charAt(0) === formData.firstLetter;
-        });
-        isEmpty = false;
-        knownLetters.push(formData.firstLetter);
+        const inputLetterWord = formData.firstLetter;
+
+        if (advancedMode === true) {
+            //če je en character in to je črka, ki je v besedi na prvem mestu
+            if (inputLetterWord.length === 1) {
+                dictionaryOfResultWords = dictionaryOfResultWords.filter((word) => {
+                    return word.charAt(0) === inputLetterWord.toLowerCase();
+                });
+                isEmpty = false;
+                knownLetters.push(inputLetterWord);
+                //če je dolžina večja od ena ampak na prvem mestu ni /
+            } else if (inputLetterWord.length > 1 && inputLetterWord[0] !== '/') {
+                isEmpty = true;
+                //odstrani vse besede ki imajo na x mestu y črko
+            } else if (inputLetterWord[0] === '/') {
+                let lettersNotInThisPos = Array.from(inputLetterWord.slice(1));
+                lettersNotInThisPos.forEach((char) => {
+                    includingLettersAfterSlash.push(char);
+                });
+                dictionaryOfResultWords = dictionaryOfResultWords.filter((word) => {
+                    //vrne besede ki na prvem mestu nimajo ene od črk za / -om
+                    return !lettersNotInThisPos.includes(word[0]);
+                });
+                isEmpty = false;
+            }
+            //če advanced mode ni true
+        } else {
+            dictionaryOfResultWords = dictionaryOfResultWords.filter((word) => {
+                return word.charAt(0) === inputLetterWord.toLowerCase();
+            });
+            isEmpty = false;
+            knownLetters.push(inputLetterWord);
+        }
     }
     //vrne vse besede ki imajo drugo črko...
     if (formData.secondLetter !== '') {
-        dictionaryOfResultWords = dictionaryOfResultWords.filter((word) => {
-            return word.charAt(1) === formData.secondLetter;
-        });
-        isEmpty = false;
-        knownLetters.push(formData.secondLetter);
+        const inputLetterWord = formData.secondLetter; //SPREMENI
+
+        if (advancedMode === true) {
+            //če je en character in to je črka, ki je v besedi na prvem mestu
+            if (inputLetterWord.length === 1) {
+                dictionaryOfResultWords = dictionaryOfResultWords.filter((word) => {
+                    return word.charAt(1) === inputLetterWord.toLowerCase();
+                });
+                isEmpty = false;
+                knownLetters.push(inputLetterWord);
+                //
+            } else if (inputLetterWord.length > 1 && inputLetterWord[0] !== '/') {
+                isEmpty = true;
+                //
+            } else if (inputLetterWord[0] === '/') {
+                let lettersNotInThisPos = Array.from(inputLetterWord.slice(1));
+                lettersNotInThisPos.forEach((char) => {
+                    includingLettersAfterSlash.push(char);
+                });
+                dictionaryOfResultWords = dictionaryOfResultWords.filter((word) => {
+                    //vrne besede ki na prvem mestu nimajo ene od črk za / -om
+                    return !lettersNotInThisPos.includes(word[1]);
+                });
+                isEmpty = false;
+            }
+            //če advanced mode ni true
+        } else {
+            dictionaryOfResultWords = dictionaryOfResultWords.filter((word) => {
+                return word.charAt(1) === inputLetterWord.toLowerCase();
+            });
+            isEmpty = false;
+            knownLetters.push(inputLetterWord);
+        }
     }
     //vrne vse besede ki imajo tretjo črko...
     if (formData.thirdLetter !== '') {
-        dictionaryOfResultWords = dictionaryOfResultWords.filter((word) => {
-            return word.charAt(2) === formData.thirdLetter;
-        });
-        isEmpty = false;
-        knownLetters.push(formData.thirdLetter);
+        const inputLetterWord = formData.thirdLetter; //SPREMENI
+
+        if (advancedMode === true) {
+            //če je en character in to je črka, ki je v besedi na prvem mestu
+            if (inputLetterWord.length === 1) {
+                dictionaryOfResultWords = dictionaryOfResultWords.filter((word) => {
+                    return word.charAt(2) === inputLetterWord.toLowerCase();
+                });
+                isEmpty = false;
+                knownLetters.push(inputLetterWord);
+                //
+            } else if (inputLetterWord.length > 1 && inputLetterWord[0] !== '/') {
+                isEmpty = true;
+                //
+            } else if (inputLetterWord[0] === '/') {
+                let lettersNotInThisPos = Array.from(inputLetterWord.slice(1));
+                lettersNotInThisPos.forEach((char) => {
+                    includingLettersAfterSlash.push(char);
+                });
+                dictionaryOfResultWords = dictionaryOfResultWords.filter((word) => {
+                    //vrne besede ki na prvem mestu nimajo ene od črk za / -om
+                    return !lettersNotInThisPos.includes(word[2]);
+                });
+                isEmpty = false;
+            }
+            //če advanced mode ni true
+        } else {
+            dictionaryOfResultWords = dictionaryOfResultWords.filter((word) => {
+                return word.charAt(2) === inputLetterWord.toLowerCase();
+            });
+            isEmpty = false;
+            knownLetters.push(inputLetterWord);
+        }
     }
     //vrne vse besede ki imajo četrto črko...
     if (formData.fourthLetter !== '') {
-        dictionaryOfResultWords = dictionaryOfResultWords.filter((word) => {
-            return word.charAt(3) === formData.fourthLetter;
-        });
-        isEmpty = false;
-        knownLetters.push(formData.fourthLetter);
+        const inputLetterWord = formData.fourthLetter; //SPREMENI
+
+        if (advancedMode === true) {
+            //če je en character in to je črka, ki je v besedi na prvem mestu
+            if (inputLetterWord.length === 1) {
+                dictionaryOfResultWords = dictionaryOfResultWords.filter((word) => {
+                    return word.charAt(3) === inputLetterWord.toLowerCase();
+                });
+                isEmpty = false;
+                knownLetters.push(inputLetterWord);
+                //
+            } else if (inputLetterWord.length > 1 && inputLetterWord[0] !== '/') {
+                isEmpty = true;
+            } else if (inputLetterWord[0] === '/') {
+                let lettersNotInThisPos = Array.from(inputLetterWord.slice(1));
+                lettersNotInThisPos.forEach((char) => {
+                    includingLettersAfterSlash.push(char);
+                });
+                dictionaryOfResultWords = dictionaryOfResultWords.filter((word) => {
+                    //vrne besede ki na prvem mestu nimajo ene od črk za / -om
+                    return !lettersNotInThisPos.includes(word[3]);
+                });
+                isEmpty = false;
+            }
+            //če advanced mode ni true
+        } else {
+            dictionaryOfResultWords = dictionaryOfResultWords.filter((word) => {
+                return word.charAt(3) === inputLetterWord.toLowerCase();
+            });
+            isEmpty = false;
+            knownLetters.push(inputLetterWord);
+        }
     }
     //vrne vse besede ki imajo peto črko...
     if (formData.fifthLetter !== '') {
-        dictionaryOfResultWords = dictionaryOfResultWords.filter((word) => {
-            return word.charAt(4) === formData.fifthLetter;
-        });
-        isEmpty = false;
-        knownLetters.push(formData.fifthLetter);
+        const inputLetterWord = formData.fifthLetter; //SPREMENI
+
+        if (advancedMode === true) {
+            //če je en character in to je črka, ki je v besedi na prvem mestu
+            if (inputLetterWord.length === 1) {
+                dictionaryOfResultWords = dictionaryOfResultWords.filter((word) => {
+                    return word.charAt(4) === inputLetterWord.toLowerCase();
+                });
+                isEmpty = false;
+                knownLetters.push(inputLetterWord);
+                //
+            } else if (inputLetterWord.length > 1 && inputLetterWord[0] !== '/') {
+                isEmpty = true;
+            } else if (inputLetterWord[0] === '/') {
+                let lettersNotInThisPos = Array.from(inputLetterWord.slice(1));
+                lettersNotInThisPos.forEach((char) => {
+                    includingLettersAfterSlash.push(char);
+                });
+                dictionaryOfResultWords = dictionaryOfResultWords.filter((word) => {
+                    //vrne besede ki na prvem mestu nimajo ene od črk za / -om
+                    return !lettersNotInThisPos.includes(word[4]);
+                });
+                isEmpty = false;
+            }
+            //če advanced mode ni true
+        } else {
+            dictionaryOfResultWords = dictionaryOfResultWords.filter((word) => {
+                return word.charAt(4) === inputLetterWord.toLowerCase();
+            });
+            isEmpty = false;
+            knownLetters.push(inputLetterWord);
+        }
     }
     //vrne vse besede ki vsebujejo 'including letters'
-    if (formData.includesLetter !== '') {
-        //spremenimo input str in array
-        let letters = Array.from(formData.includesLetter);
+    if (formData.includesLetter !== '' || includingLettersAfterSlash.length !== 0) {
+        //
+        const lettersInput = Array.from(formData.includesLetter);
+        const letters = [...lettersInput, ...includingLettersAfterSlash];
+
         letters.forEach((char) => {
             dictionaryOfResultWords = dictionaryOfResultWords.filter((word) => {
-                return word.includes(char);
+                return word.includes(char.toLowerCase());
             });
 
             knownLetters.push(char);
@@ -98,7 +348,7 @@ document.getElementById('submitBtn').addEventListener('click', () => {
         letters.forEach((char) => {
             if (!knownLetters.includes(char)) {
                 dictionaryOfResultWords = dictionaryOfResultWords.filter((word) => {
-                    return !word.includes(char);
+                    return !word.includes(char.toLowerCase());
                 });
             }
         });
@@ -107,7 +357,7 @@ document.getElementById('submitBtn').addEventListener('click', () => {
 
     //dodajanje besed v result field
     if (isEmpty === true) {
-        resultsHtml.innerText = 'Provide some information about the word first';
+        resultsHtml.innerText = 'Empty/invalid input';
     } else if (isEmpty === false && dictionaryOfResultWords.length === 0) {
         resultsHtml.innerText = 'No words could be found';
     } else {

@@ -1,3 +1,16 @@
+:root {
+    --normal-black: #000000;
+    --dark-black: #23272a;
+    --dark-gray: #393d41;
+    --light-gray: #6d6d6d;
+    --blue: #006eff;
+    --white: #ffffffff;
+    --settings-icon-normal-color: #616161;
+    --settings-icon-dark-color: #bbbbbb;
+    --buttons-background-color-normal: #c5c5c5;
+    --sun-moon-yellow: #eedf16;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -5,8 +18,6 @@ html {
 * {
     margin: 0;
     padding: 0;
-    font-family: 'Lato', sans-serif;
-    font-size: 16px;
 }
 
 h1 {
@@ -14,15 +25,25 @@ h1 {
     margin-bottom: 20px;
     font-size: 32px;
     text-align: center;
-    color: rgb(0, 110, 255);
+    color: var(--blue);
+}
+
+body {
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+    width: 100%;
+    background-color: var(--white); /*barva ozadja*/
+    color: var(--normal-black); /*text*/
+    transition: background 0.2s linear;
 }
 
 #info-icon {
-    color: rgb(0, 110, 255);
+    color: var(--blue);
     font-size: 32px;
     position: absolute;
     top: 14px;
     right: 16px;
+    cursor: pointer;
 }
 
 #info-icon:active {
@@ -32,21 +53,17 @@ h1 {
     right: 19px;
 }
 
-.wrapper {
-    text-align: center;
-    width: 100%;
-}
-
 .form-container {
     display: inline-block;
     width: 160px;
     text-align: left;
 }
 
-.form-container input {
-    border: 3px solid #929191;
+.inp {
+    width: 152px;
+    outline: none; /*da se ne pojavi focus obroba na kliku*/
+    border: 3px solid #949393;
     border-radius: 7px;
-    width: 93%;
     clear: both;
 }
 
@@ -58,11 +75,11 @@ h1 {
 
 .dictionary-btn {
     height: 28px;
-    width: 154.5px;
-    margin-bottom: 14px;
-    background-color: rgb(197, 197, 197);
+    width: 159px;
+    margin-bottom: 16px;
+    background-color: var(--buttons-background-color-normal);
     border-style: doble;
-    border-color: rgb(219, 219, 219);
+    border-color: var(--buttons-background-color-normal);
     font-size: 12.9px;
     color: black;
 }
@@ -76,11 +93,11 @@ h1 {
 }
 
 .buttons {
-    background-color: rgb(197, 197, 197);
+    background-color: var(--buttons-background-color-normal);
     border-style: doble;
-    border-color: rgb(219, 219, 219);
+    border-color: var(--buttons-background-color-normal);
     height: 28px;
-    width: 68.5px;
+    width: 71px;
 }
 
 #resetBtn {
@@ -103,12 +120,12 @@ h1 {
     display: none;
 }
 
-.popup .content {
+.content {
     position: absolute;
     top: 45%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    background: #fff;
+    background-color: var(--white);
     border-radius: 7px;
     width: 430px;
     height: 460px; /*470*/
@@ -116,19 +133,19 @@ h1 {
     text-align: center;
     padding: 20px;
     box-sizing: border-box;
+    color: var(--normal-black);
 }
 
 /* križec desno zgori*/
-.popup .close-btn {
+.close-btn {
     cursor: pointer;
     position: absolute;
     right: 15px;
     top: 14px;
     width: 30px;
     height: 30px;
-    background: rgb(255, 255, 255);
     opacity: 0.9;
-    color: rgb(0, 0, 0);
+    color: var(--normal-black);
     font-size: 35px;
     font-weight: 600;
     line-height: 31px;
@@ -138,7 +155,7 @@ h1 {
 
 /* barva, opacity, funkcijonalnost ozadja ko je popup omogočen*/
 .popup.active .overlay {
-    background-color: rgb(0, 0, 0);
+    background-color: var(--normal-black);
     opacity: 0.48;
     display: block;
 }
@@ -161,13 +178,166 @@ h1 {
     margin-bottom: 15px;
 }
 
-.instructions-p-bold {
+.p-bold {
     font-weight: bold;
+    color: var(--normal-black);
 }
 
 .instruction-images {
     text-align: center;
 }
+
+.instructions-ltr-img {
+    margin-top: 7px;
+}
+
+.instructions-example-img {
+    margin-bottom: 5px;
+}
+
+/*----SETTINGS----*/
+.fa-gear {
+    color: var(--settings-icon-normal-color);
+    font-size: 26px;
+    position: absolute;
+    top: 17px;
+    left: 17px;
+    cursor: pointer;
+}
+
+#settings-icon:active {
+    font-size: 28px;
+}
+
+.settings .settings-overlay {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    display: none;
+}
+
+.settings-content {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background-color: var(--white);
+    border-radius: 7px;
+    width: 300px;
+    height: 280px;
+    z-index: 2;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    color: var(--normal-black);
+}
+
+.settings-close-btn {
+    cursor: pointer;
+    position: absolute;
+    right: 15px;
+    top: 14px;
+    width: 30px;
+    height: 30px;
+    opacity: 0.9;
+    color: var(--normal-black);
+    font-size: 35px;
+    font-weight: 600;
+    line-height: 31px;
+    text-align: center;
+    border-radius: 50%;
+}
+
+/* barva, opacity, funkcijonalnost ozadja ko je popup omogočen*/
+.settings.active .settings-overlay {
+    background-color: var(--normal-black);
+    opacity: 0.48;
+    display: block;
+}
+
+.settings.active .settings-content {
+    transition: all 220ms ease-in-out;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.toggle-advanced-mode {
+    color: var(--normal-black);
+    text-align: left;
+    margin-top: 30px;
+    font-size: 18px;
+}
+
+.toggle-dark-mode-text {
+    color: var(--normal-black);
+    text-align: left;
+    margin-top: 50px;
+    font-size: 18px;
+}
+
+#advancedModeCheckbox {
+    width: 17px;
+    height: 17px;
+    position: absolute;
+    top: 102.5px;
+    margin-left: 30px;
+}
+
+/* dark mode toggle*/
+/*pozicija*/
+.dark-mode-toggle {
+    position: absolute;
+    left: 65%;
+    top: 61%;
+}
+
+.dark-mode-checkbox {
+    opacity: 0;
+    position: absolute;
+}
+
+/*polje za sredinsko kuglo*/
+.dark-mode-label {
+    width: 39px;
+    height: 14px;
+    background-color: #a3a3a3;
+    display: flex;
+    border-radius: 50px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    position: relative;
+    transform: scale(1.5);
+}
+
+.ball {
+    width: 20px;
+    height: 20px;
+    background-color: var(--white);
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    border-radius: 50%;
+    transition: transform 0.2s linear;
+}
+
+/*  target the elemenent after the label*/
+.dark-mode-checkbox:checked + .dark-mode-label .ball {
+    transform: translateX(25px);
+}
+
+.fa-moon {
+    color: var(--sun-moon-yellow);
+}
+
+.fa-sun {
+    color: var(--sun-moon-yellow);
+}
+/*end of dark mode toggle*/
+/*END OF SETTINGS*/
 
 /* če je screen width manjši od 460px naredi...*/
 @media (max-width: 450px) {
@@ -177,12 +347,17 @@ h1 {
     }*/
     .popup .content {
         /*og širina x višina popupa: 430x640*/
-        top: 50%;
+        top: 45%;
         width: 360px;
         height: 440px;
     }
     .example-instructions-img {
         width: auto;
+    }
+
+    .instructions-ltr-img {
+        width: 150px;
+        height: 34px;
     }
 
     .popup .close-btn {
@@ -194,14 +369,25 @@ h1 {
         font-size: 27px;
         position: absolute;
         top: 17px;
-        right: 18px;
+        right: 16px;
     }
 
     #info-icon:active {
-        font-size: 27px;
+        font-size: 26px;
         position: absolute;
         top: 17px;
-        right: 18px;
+        right: 16px;
+    }
+
+    #settings-icon {
+        font-size: 22px;
+        position: absolute;
+        top: 19px;
+        left: 15px;
+    }
+
+    #settings-icon:active {
+        font-size: 21px;
     }
 }
 
@@ -257,7 +443,67 @@ h1 {
     #info-icon:active {
         font-size: 22px;
         position: absolute;
-        top: 19px;
+        top: 18px;
         right: 3px;
     }
+
+    #settings-icon {
+        font-size: 22px;
+        position: absolute;
+        top: 19px;
+        left: 4px;
+    }
+
+    #settings-icon:active {
+        font-size: 21px;
+    }
 }
+
+/*VSE ZA DARK MODE*/
+.dark-body {
+    background-color: var(--dark-gray);
+    color: var(--white);
+}
+
+.dark-input-field {
+    color: var(--white);
+    border: 3px solid var(--dark-black);
+    background-color: var(--light-gray);
+}
+
+.dark-settings-icon {
+    color: var(--settings-icon-dark-color);
+}
+
+.dark-popup {
+    background-color: var(--normal-black);
+    color: var(--white);
+}
+
+.dark-p-bold {
+    color: var(--white);
+}
+
+.dark-close-btn {
+    color: var(--white);
+}
+
+.hidden {
+    visibility: hidden;
+    display: none;
+}
+
+.dark-dark-mode-label {
+    background-color: #504f4f;
+}
+
+.dark-mode-buttons-color {
+    background-color: var(--light-gray);
+    border-color: var(--light-gray);
+    color: var(--white);
+}
+
+.dark-mode-buttons-color:hover {
+    background-color: #7a7a7a !important;
+}
+/*konec sprememb za dark mode*/
