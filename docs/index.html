@@ -35,7 +35,7 @@
             <div class="popup" id="popup-1">
                 <div class="overlay"></div>
                 <div class="content">
-                    <div class="close-btn" id="close-btn">&times;</div>
+                    <div class="close-btn disable-text-select" id="close-btn">&times;</div>
                     <h1>WELCOME</h1>
                     <div class="instructions">
                         <p class="p-bold">How to use wordle helper:</p>
@@ -75,25 +75,49 @@
             <div class="settings" id="settings-1">
                 <div class="settings-overlay"></div>
                 <div class="settings-content">
-                    <div class="settings-close-btn" id="settings-close-btn">&times;</div>
+                    <div class="settings-close-btn disable-text-select" id="settings-close-btn">&times;</div>
                     <h1>SETTINGS</h1>
-                    <div class="toggle-advanced-mode">
-                        <p class="p-bold">
-                            <label for="advancedModeCheckbox">Toggle advanced mode</label>
-                            <input type="checkbox" name="advanced-mode-checkbox" id="advancedModeCheckbox" />
-                        </p>
+                    <div class="advanced-mode-content">
+                        <div class="toggle-advanced-mode disable-text-select">
+                            <label for="advancedModeCheckbox">
+                                <input type="checkbox" name="advanced-mode-checkbox" id="advancedModeCheckbox" />
+                                <details>
+                                    <summary class="p-bold">Toggle advanced mode</summary>
+                                    <div class="text-border">
+                                        <div class="more-info-for-advanced-mode image-margin-top padding-inside">
+                                            <img src="./new_images/sonar-word-light.png" alt="Image" height="24" width="auto" />
+                                            <br />
+                                            <img src="./new_images/advanced-mode-light.png" class="image-margin-top" alt="Image" height="32" width="auto" />
+                                        </div>
+                                        <!--for dark mode-->
+                                        <div class="more-info-for-advanced-mode image-margin-top padding-inside hidden">
+                                            <img src="./new_images/sonar-word-dark.png" alt="Image" height="24" width="auto" />
+                                            <br />
+                                            <img src="./new_images/advanced-mode-dark.png" class="image-margin-top" alt="Image" height="32" width="auto" />
+                                        </div>
+                                    </div>
+                                </details>
+                            </label>
+                        </div>
                     </div>
-                    <div class="toggle-dark-mode-text">
-                        <p class="p-bold">Toggle dark mode</p>
-                    </div>
-
-                    <div class="dark-mode-toggle">
-                        <input type="checkbox" class="dark-mode-checkbox" id="darkModeCheckbox" />
-                        <label for="darkModeCheckbox" class="dark-mode-label">
-                            <i class="fa-solid fa-sun"></i>
-                            <i class="fas fa-moon"></i>
-                            <div class="ball"></div>
-                        </label>
+                    <div class="dark-mode-info">
+                        <div class="toggle-dark-mode-text disable-text-select">
+                            <details>
+                                <summary class="p-bold">Toggle dark mode</summary>
+                                <br />
+                                <div class="text-border">
+                                    <p class="align-center padding-inside">Toggle between light and dark mode</p>
+                                </div>
+                            </details>
+                        </div>
+                        <div class="dark-mode-toggle">
+                            <input type="checkbox" class="dark-mode-checkbox not-clickable" id="darkModeCheckbox" />
+                            <label for="darkModeCheckbox" class="dark-mode-label">
+                                <i class="fa-solid fa-sun"></i>
+                                <i class="fas fa-moon"></i>
+                                <div class="ball"></div>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>

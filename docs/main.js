@@ -27,6 +27,15 @@ const toggleColorTheme = () => {
         btn.classList.toggle('dark-mode-buttons-color');
     });
 
+    document.querySelectorAll('.more-info-for-advanced-mode').forEach((item) => {
+        item.classList.toggle('hidden');
+    });
+    document.querySelector('.toggle-dark-mode-text').classList.toggle('dark-p-bold'); //samo da bo text bele barve
+
+    document.querySelectorAll('.text-border').forEach((item) => {
+        item.classList.toggle('text-border-dark');
+    });
+
     //defaultno je naštiman da so skrite slike od dark moda
     //v preverjanju če je local storage theme === dark odstrani ali pa pusti class hidden
     //v vsakem primeru imajo ene slike class hidden in to samo toggla katere
