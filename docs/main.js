@@ -349,6 +349,11 @@ document.getElementById('submitBtn').addEventListener('click', () => {
             knownLetters.push(char);
         });
         isEmpty = false;
+
+        //da izpiše še črke v polje includes letters
+        const field = document.querySelector('#includesLetter');
+        field.value = '';
+        field.value += Array.from(new Set(letters)).join('');
     }
 
     //vrne vse besede ki ne vsebujejo določenih črk
@@ -387,8 +392,16 @@ document.getElementById('submitBtn').addEventListener('click', () => {
     }
 });
 
-//čiščenje forma in result fielda
-document.getElementById('resetBtn').addEventListener('click', () => {
-    document.getElementById('input-form').reset();
+const resetForm = () => {
     document.getElementById('results').innerText = '';
+    document.getElementById('input-form').reset();
+};
+//čiščenje forma in result fielda
+document.getElementById('resetBtn').addEventListener('click', resetForm);
+
+//escape resetira form
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+        resetForm();
+    }
 });
