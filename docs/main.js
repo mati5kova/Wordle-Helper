@@ -43,6 +43,11 @@ const toggleColorTheme = () => {
     document.querySelector('.images-dark-mode').classList.toggle('hidden');
 };
 
+//na loadu pogleda če je global theme == dark
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    localStorage.setItem('theme', 'dark');
+}
+
 if (localStorage.getItem('theme') === null) {
     localStorage.setItem('theme', 'light');
     document.getElementById('darkModeCheckbox').checked = false;
@@ -68,6 +73,24 @@ document.getElementById('darkModeCheckbox').addEventListener('change', () => {
     }
 
     toggleColorTheme();
+});
+
+//global light/dark mode change listener
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
+    const globalPref = event.matches ? 'dark' : 'light';
+    if (globalPref === 'dark') {
+        if (localStorage.getItem('theme') === 'light') {
+            toggleColorTheme();
+        }
+        localStorage.setItem('theme', 'dark');
+        document.getElementById('darkModeCheckbox').checked = true;
+    } else {
+        if (localStorage.getItem('theme') === 'dark') {
+            toggleColorTheme();
+        }
+        localStorage.setItem('theme', 'light');
+        document.getElementById('darkModeCheckbox').checked = false;
+    }
 });
 
 //ADVANCED SEARCH MODE
