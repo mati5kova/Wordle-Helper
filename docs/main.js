@@ -151,6 +151,7 @@ const renewLists = () => {
 document.getElementById('submitBtn').addEventListener('click', () => {
     renewLists(); //da so liste polne, ne pa že filtrirane od prej
     let isEmpty = true; //za preverjanje user inputa
+    let isInvalid = false;
     let knownLetters = [];
     let includingLettersAfterSlash = [];
 
@@ -171,7 +172,7 @@ document.getElementById('submitBtn').addEventListener('click', () => {
                 knownLetters.push(inputLetterWord);
                 //če je dolžina večja od ena ampak na prvem mestu ni /
             } else if (inputLetterWord.length > 1 && inputLetterWord[0] !== '/') {
-                isEmpty = true;
+                isInvalid = true;
                 //odstrani vse besede ki imajo na x mestu y črko
             } else if (inputLetterWord[0] === '/') {
                 let lettersNotInThisPos = Array.from(inputLetterWord.slice(1));
@@ -207,7 +208,7 @@ document.getElementById('submitBtn').addEventListener('click', () => {
                 knownLetters.push(inputLetterWord);
                 //
             } else if (inputLetterWord.length > 1 && inputLetterWord[0] !== '/') {
-                isEmpty = true;
+                isInvalid = true;
                 //
             } else if (inputLetterWord[0] === '/') {
                 let lettersNotInThisPos = Array.from(inputLetterWord.slice(1));
@@ -243,7 +244,7 @@ document.getElementById('submitBtn').addEventListener('click', () => {
                 knownLetters.push(inputLetterWord);
                 //
             } else if (inputLetterWord.length > 1 && inputLetterWord[0] !== '/') {
-                isEmpty = true;
+                isInvalid = true;
                 //
             } else if (inputLetterWord[0] === '/') {
                 let lettersNotInThisPos = Array.from(inputLetterWord.slice(1));
@@ -279,7 +280,7 @@ document.getElementById('submitBtn').addEventListener('click', () => {
                 knownLetters.push(inputLetterWord);
                 //
             } else if (inputLetterWord.length > 1 && inputLetterWord[0] !== '/') {
-                isEmpty = true;
+                isInvalid = true;
             } else if (inputLetterWord[0] === '/') {
                 let lettersNotInThisPos = Array.from(inputLetterWord.slice(1));
                 lettersNotInThisPos.forEach((char) => {
@@ -314,7 +315,7 @@ document.getElementById('submitBtn').addEventListener('click', () => {
                 knownLetters.push(inputLetterWord);
                 //
             } else if (inputLetterWord.length > 1 && inputLetterWord[0] !== '/') {
-                isEmpty = true;
+                isInvalid = true;
             } else if (inputLetterWord[0] === '/') {
                 let lettersNotInThisPos = Array.from(inputLetterWord.slice(1));
                 lettersNotInThisPos.forEach((char) => {
@@ -370,8 +371,10 @@ document.getElementById('submitBtn').addEventListener('click', () => {
     }
 
     //dodajanje besed v result field
-    if (isEmpty === true) {
-        resultsHtml.innerText = 'Empty/invalid input';
+    if (isInvalid === true) {
+        resultsHtml.innerText = 'Invalid input';
+    } else if (isEmpty === true) {
+        resultsHtml.innerText = 'Provide some info about the word';
     } else if (isEmpty === false && dictionaryOfResultWords.length === 0) {
         resultsHtml.innerText = 'No words could be found';
     } else {
